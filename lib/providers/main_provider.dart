@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -31,9 +30,11 @@ class MainProvider with ChangeNotifier {
   IconData starticon = Icons.add_shopping_cart;
   IconData endicon = Icons.remove_shopping_cart;
   void addtocart(id) {
-    diohelp.postdata(text: "carts", data: {"product_id": id});
-    notifyListeners();
-    getcartdata();
+    diohelp.postdata(text: "carts", data: {"product_id": id}).then((value) {
+      getdata();
+      getcartdata();
+      notifyListeners();
+    });
   }
 
   void deletcart(id, index) {
