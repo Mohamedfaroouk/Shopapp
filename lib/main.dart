@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:myshop/layout/splashscreen.dart';
 import 'package:myshop/providers/main_provider.dart';
 import 'package:myshop/shared/remote/dio_helper.dart';
 import 'package:myshop/login/test.dart';
@@ -36,7 +37,9 @@ class MyApp extends StatelessWidget {
               primaryColor: Colors.white,
               primarySwatch: Colors.blue,
             ),
-            home: LoginScreen(),
+            home: snapshot.connectionState == ConnectionState.waiting
+                ? SplashScreen()
+                : LoginScreen(),
           );
         });
   }
