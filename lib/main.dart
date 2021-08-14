@@ -13,34 +13,36 @@ import 'layout/homepage.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   diohelp.init();
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider.value(
-        value: MainProvider()
-          ..getdata()
-          ..getcartdata())
-  ], child: MyApp()));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: Future.delayed(Duration(seconds: 3)),
-        builder: (context, snapshot) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Flutter Demo',
-            theme: ThemeData(
-              appBarTheme:
-                  AppBarTheme(iconTheme: IconThemeData(color: Colors.black)),
-              primaryColor: Colors.white,
-              primarySwatch: Colors.blue,
-            ),
-            home: snapshot.connectionState == ConnectionState.waiting
-                ? SplashScreen()
-                : LoginScreen(),
-          );
-        });
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(
+              value: MainProvider()
+                ..getcartdata()
+                ..getdata())
+        ],
+        child: FutureBuilder(
+            future: Future.delayed(const Duration(seconds: 3)),
+            builder: (context, snapshot) {
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'Flutter Demo',
+                theme: ThemeData(
+                  appBarTheme: const AppBarTheme(
+                      iconTheme: const IconThemeData(color: Colors.black)),
+                  primaryColor: Colors.white,
+                  primarySwatch: Colors.blue,
+                ),
+                home: snapshot.connectionState == ConnectionState.waiting
+                    ? const SplashScreen()
+                    : LoginScreen(),
+              );
+            }));
   }
 }

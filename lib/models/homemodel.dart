@@ -21,7 +21,7 @@ class homemodeldata {
 
 class productsmodel {
   int? id;
-  var price;
+  double? price;
   String? image;
   String? name;
   String? description;

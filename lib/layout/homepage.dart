@@ -3,16 +3,12 @@ import 'dart:async';
 import 'package:animate_icons/animate_icons.dart';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_login/theme.dart';
 import 'package:flutter_login/widgets.dart';
 import 'package:myshop/Screens/Cart.dart';
-import 'package:myshop/Screens/Categorys.dart';
 import 'package:myshop/Screens/Shop.dart';
-import 'package:myshop/Screens/details.dart';
 import 'package:myshop/Screens/search.dart';
 import 'package:myshop/providers/main_provider.dart';
 import 'package:myshop/shared/constatns.dart';
-import 'package:myshop/shared/widgets/custom_widget.dart';
 import 'package:provider/provider.dart';
 
 class home extends StatefulWidget {
@@ -33,7 +29,7 @@ List<AnimateIconController> animationControllers = [
   controller3!,
   controller4!
 ];
-List<Widget> Screens = [Shop(), Cart()];
+List<Widget> Screens = [const Shop(), const Cart()];
 double sizey = 0;
 double? searchanimation = null;
 double sizeX = 0;
@@ -81,7 +77,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
   Widget drawermenuscreen() => Scaffold(
         body: Container(
           width: width,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -120,7 +116,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                             Shadow(
                               color: Colors.black.withOpacity(.3),
                               blurRadius: 0,
-                              offset: Offset(2, 2),
+                              offset: const Offset(2, 2),
                             )
                           ],
                           color: Colors.white,
@@ -165,20 +161,20 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
               color: Colors.white.withOpacity(.3),
               spreadRadius: 10,
               blurRadius: 0,
-              offset: Offset(-10, 5), // changes position of shadow
+              offset: const Offset(-10, 5), // changes position of shadow
             ),
             BoxShadow(
               color: Colors.black.withOpacity(.1),
               spreadRadius: 10,
               blurRadius: 0,
-              offset: Offset(-25, 15), // changes position of shadow
+              offset: const Offset(-25, 15), // changes position of shadow
             ),
           ], borderRadius: BorderRadius.circular(circler)),
           transform: Matrix4.translationValues(sizey, sizeX, 0)
             ..scale(scale)
             ..rotateZ(rotation),
 
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           //transform: Matrix4.rotationY(0),
           child: Scaffold(
             appBar: AppBar(
@@ -186,7 +182,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Padding(
+                      const Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         /*              child: Container(
                           width: 34,
@@ -205,8 +201,9 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                       HeroText("MyShop",
                           tag: "titleherotag",
                           viewState: ViewState.shrunk,
-                          style: TextStyle(fontSize: 30, color: Colors.black)),
-                      SizedBox(width: 20),
+                          style: const TextStyle(
+                              fontSize: 30, color: Colors.black)),
+                      const SizedBox(width: 20),
                     ],
                   ),
                   /*  Row(
@@ -236,7 +233,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                       closedColor: Theme.of(context).primaryColor,
                       closedElevation: 0,
                       openElevation: 0,
-                      transitionDuration: Duration(milliseconds: 500),
+                      transitionDuration: const Duration(milliseconds: 500),
                       transitionType: ContainerTransitionType.fadeThrough,
                       closedBuilder: (context, opencontainer) {
                         return Container(
@@ -248,13 +245,13 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: AnimatedContainer(
-                                  duration: Duration(milliseconds: 300),
+                                  duration: const Duration(milliseconds: 300),
                                   width: searchanimation,
                                   decoration: BoxDecoration(
                                       border: null,
                                       color: Colors.black12,
                                       borderRadius: BorderRadius.circular(25)),
-                                  child: Padding(
+                                  child: const Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Align(
                                       alignment: AlignmentDirectional.centerEnd,
@@ -287,8 +284,8 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                 leading: anmiIcon(
                     Icons.menu,
                     Icons.menu_open_rounded,
-                    controller,
-                    Theme.of(context).appBarTheme.iconTheme!.color)),
+                    controller!,
+                    Theme.of(context).appBarTheme.iconTheme!.color!)),
             body: Screens[Screenindex],
           ),
         ),
@@ -302,7 +299,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
         onTap: () {
           setState(() {
             Screenindex = index;
-            Timer(Duration(milliseconds: 150), () {
+            Timer(const Duration(milliseconds: 150), () {
               setState(() {});
               closeDrawer();
             });
@@ -322,7 +319,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                   Shadow(
                     color: Colors.black.withOpacity(.3),
                     blurRadius: 0,
-                    offset: Offset(2, 1),
+                    offset: const Offset(2, 1),
                   )
                 ],
                 color: Colors.white,
@@ -339,7 +336,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
     if (sizey == 0 && sizeX == 0 && rotation == 0)
       setState(() {
         circler = 40;
-        Timer(Duration(milliseconds: 300), () {
+        Timer(const Duration(milliseconds: 300), () {
           if (sizey != 0) rotation = -0.12;
           setState(() {});
         });
@@ -364,7 +361,8 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
     }
   }
 
-  Widget anmiIcon(startIcon, endIcon, controller, color) {
+  Widget anmiIcon(IconData startIcon, IconData endIcon,
+      AnimateIconController controller, Color color) {
     return AnimateIcons(
       startIcon: startIcon,
       endIcon: endIcon,
@@ -379,7 +377,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
         closeDrawer();
         return true;
       },
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
       startIconColor: color,
       endIconColor: color,
       clockwise: false,
@@ -388,7 +386,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
 }
 
 void DrawericonsAnimation() {
-  Timer(Duration(seconds: 10), () {
+  Timer(const Duration(seconds: 10), () {
     animationControllers.forEach((element) {
       if (animate == true) if (element.isStart()) {
         element.animateToEnd();

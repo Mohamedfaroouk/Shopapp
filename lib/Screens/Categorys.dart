@@ -10,7 +10,6 @@ class Categorty extends StatefulWidget {
 class _CategortyState extends State<Categorty> {
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text("category"));
-    ;
+    return const Center(child: const Text("category"));
   }
 }

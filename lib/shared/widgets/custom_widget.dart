@@ -20,7 +20,7 @@ Widget myanimationicon(
         onendpressfunction;
         return true;
       },
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
       startIconColor: colorbefor,
       endIconColor: colorafter,
       clockwise: false,

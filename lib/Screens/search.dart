@@ -44,7 +44,7 @@ class _searchState extends State<search> {
                             color: Theme.of(context).iconTheme.color,
                           )),
                       textAlignVertical: TextAlignVertical.center,
-                      style: TextStyle(color: Colors.black),
+                      style: const TextStyle(color: Colors.black),
                     ),
                   ),
                 ),
@@ -52,11 +52,11 @@ class _searchState extends State<search> {
             ],
           ),
           body: value.searchList == null
-              ? CircularProgressIndicator()
+              ? const CircularProgressIndicator()
               : ListView.separated(
                   itemBuilder: (context, index) => cartitem(context,
                       value.mysearchmodel, index, value, value.searchList),
-                  separatorBuilder: (context, index) => SizedBox(
+                  separatorBuilder: (context, index) => const SizedBox(
                         height: 10,
                       ),
                   itemCount: value.searchList.length));

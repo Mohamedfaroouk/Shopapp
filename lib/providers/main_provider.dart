@@ -21,24 +21,38 @@ class MainProvider with ChangeNotifier {
   void getcartdata() {
     diohelp.gethomedata(text: "carts").then((value) {
       cartsmodel = cartmodel.fromjson(value.data);
-
+      total();
       notifyListeners();
     });
+  }
+
+  double thetotal = 0;
+  void total() {
+    thetotal = 0;
+    cartsmodel!.data!.cartproducts.forEach((element) {
+      thetotal += element.price!.round();
+    });
+
+    notifyListeners();
   }
 
   List<IconData> iconss = [Icons.add_shopping_cart, Icons.remove_shopping_cart];
   IconData starticon = Icons.add_shopping_cart;
   IconData endicon = Icons.remove_shopping_cart;
-  void addtocart(id) {
-    diohelp.postdata(text: "carts", data: {"product_id": id}).then((value) {
-      getdata();
+
+  void addtocart(productsmodel id) {
+    diohelp.postdata(text: "carts", data: {"product_id": id.id}).then((value) {
       getcartdata();
+
       notifyListeners();
     });
+    id.incart = !id.incart!;
+    notifyListeners();
   }
 
   void deletcart(id, index) {
     cartsmodel!.data!.cartproducts.removeAt(index);
+    total();
     addtocart(id);
   }
 
@@ -69,14 +83,14 @@ class MainProvider with ChangeNotifier {
     }
   }
 
-  IconData endcarticons(bool elemnte) {
+  /*  IconData endcarticons(bool elemnte) {
     if (elemnte) {
       return Icons.add_shopping_cart;
     } else {
       return Icons.remove_shopping_cart;
     }
   }
-
+ */
   Color startcarticonscolor(bool elemnte) {
     if (elemnte) {
       return Colors.red;
@@ -85,11 +99,12 @@ class MainProvider with ChangeNotifier {
     }
   }
 
-  Color endcarticonscolor(bool elemnte) {
+  /*  Color endcarticonscolor(bool elemnte) {
     if (elemnte) {
       return Colors.black;
     } else {
       return Colors.red;
     }
   }
+ */
 }

@@ -37,7 +37,7 @@ class _detailsState extends State<details> {
       return Scaffold(
         appBar: AppBar(
           actions: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.shopping_cart))
+            IconButton(onPressed: () {}, icon: const Icon(Icons.shopping_cart))
           ],
           elevation: 0,
         ),
@@ -57,7 +57,7 @@ class _detailsState extends State<details> {
                       image: NetworkImage("${widget.model.image}"),
                       fit: BoxFit.contain,
                       placeholder:
-                          AssetImage('assets/images/Fidget-spinner.gif'),
+                          const AssetImage('assets/images/Fidget-spinner.gif'),
                     )),
                 SizedBox(
                   height: height * 0.03,
@@ -77,13 +77,13 @@ class _detailsState extends State<details> {
                 SizedBox(
                   height: height * 0.03,
                 ),
-                Align(
+                const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "Description",
                       textScaleFactor: 1.2,
                     )),
-                Divider(),
+                const Divider(),
                 Align(
                   alignment: Alignment.topLeft,
                   child: Wrap(
@@ -101,7 +101,7 @@ class _detailsState extends State<details> {
                   height: height * 0.02,
                 ),
                 Row(children: [
-                  Spacer(),
+                  const Spacer(),
                   myanimationicon(
                       Icons.favorite_outline,
                       Icons.favorite,
@@ -109,27 +109,58 @@ class _detailsState extends State<details> {
                       Colors.black,
                       Colors.red,
                       context),
-                  Divider(),
-                  AnimateIcons(
+                  const Divider(),
+                  /*   AnimateIcons(
                     startIcon: value.startcarticons(widget.model.incart!),
-                    endIcon: value.endcarticons(widget.model.incart!),
+                    endIcon: value.startcarticons(widget.model.incart!),
                     size: MediaQuery.of(context).size.width * 0.067,
                     controller: productAnimatcontroller!,
                     onStartIconPress: () {
-                      value.addtocart(widget.model.id);
+                      value.addtocart(widget.model);
                       return true;
                     },
                     onEndIconPress: () {
                       print("Clicked on Close Icon");
-                      value.addtocart(widget.model.id);
+                      value.addtocart(widget.model);
                       return true;
                     },
                     duration: Duration(milliseconds: 500),
                     startIconColor:
                         value.startcarticonscolor(widget.model.incart!),
-                    endIconColor: value.endcarticonscolor(widget.model.incart!),
+                    endIconColor:
+                        value.startcarticonscolor(widget.model.incart!),
                     clockwise: false,
                   ),
+                 */
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          // thedata[index].incart = !thedata[index].incart!;
+                          value.addtocart(widget.model);
+                          // else
+                          //  test3 = Icon(Icons.add_shopping_cart,key: ValueKey(1));
+                        });
+                      },
+                      icon: AnimatedSwitcher(
+                          switchInCurve: Curves.fastLinearToSlowEaseIn,
+                          switchOutCurve: Curves.easeInExpo,
+                          duration: const Duration(milliseconds: 2600),
+                          reverseDuration: const Duration(milliseconds: 100),
+                          transitionBuilder: (child, animat) =>
+                              RotationTransition(
+                                turns: animat,
+                                child: child,
+                              ),
+                          child: widget.model.incart!
+                              ? const Icon(
+                                  Icons.remove_shopping_cart,
+                                  key: const ValueKey(2),
+                                  color: Colors.red,
+                                )
+                              : const Icon(
+                                  Icons.add_shopping_cart,
+                                  key: const ValueKey(1),
+                                )))
                 ]),
               ],
             ),

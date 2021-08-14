@@ -2,13 +2,9 @@ import 'package:animate_icons/animate_icons.dart';
 import 'package:animations/animations.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:myshop/Screens/Cart.dart';
 import 'package:myshop/Screens/details.dart';
 import 'package:myshop/layout/homepage.dart';
-import 'package:myshop/models/homemodel.dart';
 import 'package:myshop/providers/main_provider.dart';
-import 'package:myshop/shared/remote/dio_helper.dart';
-import 'package:myshop/shared/widgets/custom_widget.dart';
 import 'package:provider/provider.dart';
 
 class Shop extends StatefulWidget {
@@ -34,9 +30,9 @@ class _ShopState extends State<Shop> {
     final height = MediaQuery.of(context).size.height;
     return Consumer<MainProvider>(builder: (context, value, child) {
       return value.mymodel == null
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -56,7 +52,7 @@ class _ShopState extends State<Shop> {
                                 e.image!,
                               ),
                               fit: BoxFit.cover,
-                              placeholder: AssetImage(
+                              placeholder: const AssetImage(
                                   'assets/images/Fidget-spinner.gif'),
                             ),
                           )
@@ -69,8 +65,8 @@ class _ShopState extends State<Shop> {
                         enableInfiniteScroll: true,
                         reverse: false,
                         autoPlay: true,
-                        autoPlayInterval: Duration(seconds: 5),
-                        autoPlayAnimationDuration: Duration(seconds: 1),
+                        autoPlayInterval: const Duration(seconds: 5),
+                        autoPlayAnimationDuration: const Duration(seconds: 1),
                         autoPlayCurve: Curves.fastOutSlowIn,
                         scrollDirection: Axis.horizontal,
                       ),
@@ -78,7 +74,7 @@ class _ShopState extends State<Shop> {
                     SizedBox(
                       height: height * 0.02,
                     ),
-                    Padding(
+                    const Padding(
                       padding: const EdgeInsets.only(left: 8),
                       child: Text(
                         "Products",
@@ -91,7 +87,7 @@ class _ShopState extends State<Shop> {
                     GridView.count(
                       crossAxisCount: 2,
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       mainAxisSpacing: 1.0,
                       crossAxisSpacing: 1.0,
                       childAspectRatio: 1 / 2,
@@ -106,9 +102,13 @@ class _ShopState extends State<Shop> {
     });
   }
 
+  // ignore: non_constant_identifier_names
   Widget Productbuilder(MainProvider value, index) {
-    var thedata = value.mymodel!.data!.products;
+    final thedata = value.mymodel!.data!.products;
     return Card(
+      elevation: 2,
+      shadowColor: Colors.black87,
+      color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(9.0),
         child: Column(
@@ -117,7 +117,7 @@ class _ShopState extends State<Shop> {
             Expanded(
                 child: OpenContainer(
               transitionType: ContainerTransitionType.fadeThrough,
-              transitionDuration: Duration(milliseconds: 500),
+              transitionDuration: const Duration(milliseconds: 500),
               closedBuilder: (context, opencontainer) {
                 return Align(
                   alignment: Alignment.center,
@@ -129,7 +129,8 @@ class _ShopState extends State<Shop> {
                     },
                     image: NetworkImage("${thedata![index].image}"),
                     fit: BoxFit.contain,
-                    placeholder: AssetImage('assets/images/Fidget-spinner.gif'),
+                    placeholder:
+                        const AssetImage('assets/images/Fidget-spinner.gif'),
                   ),
                 );
               },
@@ -157,13 +158,13 @@ class _ShopState extends State<Shop> {
                 ),
                 Expanded(
                   child: Text(
-                    "${thedata[index].price.round()} EGP",
+                    "${thedata[index].price!.round()} EGP",
                     textAlign: TextAlign.right,
                   ),
                 )
               ],
             ),
-            Divider(),
+            const Divider(),
             Row(children: [
               AnimateIcons(
                 startIcon: Icons.favorite_outline,
@@ -178,39 +179,65 @@ class _ShopState extends State<Shop> {
 
                   return true;
                 },
-                duration: Duration(milliseconds: 500),
+                duration: const Duration(milliseconds: 500),
                 startIconColor: Colors.black,
                 endIconColor: Colors.red,
                 clockwise: false,
               ),
-              Spacer(),
-              AnimateIcons(
+              const Spacer(),
+              /*  AnimateIcons(
                 startIcon: value.startcarticons(thedata[index].incart!),
-                endIcon: value.endcarticons(thedata[index].incart!),
+                endIcon: value.startcarticons(thedata[index].incart!),
                 size: MediaQuery.of(context).size.width * 0.067,
                 controller: productAnimatcontroller!,
                 onStartIconPress: () {
-                  value.addtocart(thedata[index].id);
+                  value.addtocart(thedata[index]);
                   return true;
                 },
                 onEndIconPress: () {
                   print("Clicked on Close Icon");
-                  value.addtocart(thedata[index].id);
+                  value.addtocart(thedata[index]);
                   return true;
                 },
                 duration: Duration(milliseconds: 500),
                 startIconColor:
                     value.startcarticonscolor(thedata[index].incart!),
-                endIconColor: value.endcarticonscolor(thedata[index].incart!),
+                endIconColor: value.startcarticonscolor(thedata[index].incart!),
                 clockwise: false,
               ),
+             */
+              IconButton(
+                  onPressed: () {
+                    setState(() {
+                      // thedata[index].incart = !thedata[index].incart!;
+                      value.addtocart(thedata[index]);
+                      // else
+                      //  test3 = Icon(Icons.add_shopping_cart,key: ValueKey(1));
+                    });
+                  },
+                  icon: AnimatedSwitcher(
+                      switchInCurve: Curves.fastLinearToSlowEaseIn,
+                      switchOutCurve: Curves.easeInExpo,
+                      duration: const Duration(milliseconds: 2600),
+                      reverseDuration: const Duration(milliseconds: 100),
+                      transitionBuilder: (child, animat) => RotationTransition(
+                            turns: animat,
+                            child: child,
+                          ),
+                      child: thedata[index].incart!
+                          ? const Icon(
+                              Icons.remove_shopping_cart,
+                              key: const ValueKey(2),
+                              color: Colors.red,
+                            )
+                          : const Icon(
+                              Icons.add_shopping_cart,
+                              key: ValueKey(1),
+                            )))
             ]),
           ],
         ),
       ),
-      elevation: 2,
-      shadowColor: Colors.black87,
-      color: Colors.white,
     );
   }
 }
