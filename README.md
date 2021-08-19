@@ -1,16 +1,9 @@
-# myshop
+## MY- SHOP APP UI
+A beautiful animated Login , register , custom drawer and icons
+Allow the user to put items in favourites and cart and search for items 
+ I Used an open API and Dio for the backend .
+ 
+ 
+ ![20210819_164545](https://user-images.githubusercontent.com/88829064/130089858-2c88bdbf-247d-4bd9-8a09-a71158713668.gif)
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+ ![20210819_151508](https://user-images.githubusercontent.com/88829064/130088013-012fa645-4a99-4c63-a48e-05efd4fe1ccf.gif)
